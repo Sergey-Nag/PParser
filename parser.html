@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>PARSER 2.0</title>
+  <link rel="stylesheet" href="parser.css">
+  <script src="vue.js"></script>
+
+</head>
+
+<body>
+
+  <div id="app">
+    <transition name="fade">
+      <section v-if="isError" id="errorMsg">
+        <div class="errorBlock">
+          <span class="big">!</span>
+          <span>
+            <span class="h2">Error: {{error.name}}</span><br>
+            <span>{{error.descr}}</span>
+          </span>
+          <div class="cross" @click="isError=false">x</div>
+        </div>
+      </section>
+    </transition>
+    <section class="block full-row rounded">
+      <input id="linkInput" type="text" class="clear_input" placeholder="Search link..." @keyup.enter="linkExport()"> <input type="button" class="clear_input" value="Поиск" @click="linkExport()">
+    </section>
+    <section class="block two-row">
+      <table>
+        <thead>
+          <tr>
+            <th v-for="head in returnActivesInput()">{{head.name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in results">
+            <td v-if="returnActivesInput('one')">{{row.one}}</td>
+            <td v-if="returnActivesInput('two')">{{row.two}}</td>
+            <td v-if="returnActivesInput('three')">{{row.three}}</td>
+            <td v-if="returnActivesInput('four')">{{row.four}}</td>
+            <td v-if="returnActivesInput('five')">{{row.five}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="block">
+      <div class="buttons_wrapp">
+        <input v-for="check in tableHeads" :id="check.id" name="check.id" type="checkbox" class="clear_input" v-model="check.val">
+        <label v-for="check in tableHeads" :for="check.id">{{check.name}}</label>
+        <!--        <input type="button" class="clear_input" value="clear">-->
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Val</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Amount rows</td>
+            <td>{{amount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="socket.io.js"></script>
+  <script>
+    var socket = io('http://localhost:3030');
+    //    socke
+    var app = new Vue({
+      el: '#app',
+      data: {
+        linkTo: '',
+        tableHeads: [{
+            name: 'Область',
+            id: 'one',
+            val: true
+          },
+          {
+            name: 'Город',
+            id: 'two',
+            val: true
+          },
+          {
+            name: 'Ссылка',
+            id: 'three',
+            val: true
+          },
+          {
+            name: 'Почта',
+            id: 'four',
+            val: true
+          },
+          {
+            name: 'Телефон',
+            id: 'five',
+            val: true
+          }
+        ],
+        results: [{
+          one: 'one',
+          two: 'two',
+          three: 'three',
+          four: 'four',
+          five: 'five'
+        }, {
+          one: 'one',
+          two: 'two',
+          three: 'three',
+          four: 'four',
+          five: 'five'
+        }, {
+          one: 'one',
+          two: 'two',
+          three: 'three',
+          four: 'four',
+          five: 'five'
+        }, {
+          one: 'one',
+          two: 'two',
+          three: 'three',
+          four: 'four',
+          five: 'five'
+        }, {
+          one: 'one',
+          two: 'two',
+          three: 'three',
+          four: 'four',
+          five: 'five'
+        }],
+        amount: 0,
+        isError: false,
+        error: {
+          name: '',
+          descr: ''
+        }
+      },
+      methods: {
+        update() {
+          this.amount = this.results.length;
+        },
+        returnActivesInput(arg) {
+          if (arg) return (this.tableHeads.filter((el) => el.id == arg && el.val).length > 0) ? true : false;
+          else return this.tableHeads.filter((el) => el.val);
+        },
+        linkExport() {
+          this.linkTo = document.getElementById('linkInput').value;
+          if (this.linkTo !== '') {
+
+            let query = {
+              link: this.linkTo,
+              attr: {
+                check: this.tableHeads
+              }
+            }
+            socket.emit('link-export', query);
+
+          }
+        },
+        showErrMessage(msg, name, time) {
+          this.error = {
+            name: name,
+            descr: msg
+          }
+          this.isError = true;
+          setTimeout(() => this.isError = false, time);
+        }
+      },
+      created() {
+        this.update();
+      }
+
+    });
+    socket.on('send-error', function(data) {
+      app.showErrMessage(data, 'link', 5000);
+    });
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  background: #e1fff5;
+  font-family: sans-serif;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  grid-template-rows: 50px auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.block {
+  background: white;
+  padding: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 2px 15px rgba(218, 238, 250, 0.75);
+  box-shadow: 0 2px 15px rgba(218, 238, 250, 0.75);
+  border: solid 1px #e7e7e7;
+}
+
+.block.full-row {
+  grid-column-start: span 3;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  padding: 10px;
+}
+
+.block.two-row {
+  grid-column-start: span 2;
+}
+
+.rounded {
+  border-radius: 50rem;
+}
+
+.clear_input {
+  outline: none;
+  padding: 0 0 1px 0;
+  border: solid 1px transparent;
+}
+
+.clear_input:focus,
+.clear_input[type="button"]:hover {
+  border-color: skyblue;
+  -webkit-box-shadow: 0 0 4px skyblue;
+  box-shadow: 0 0 4px skyblue;
+}
+
+.clear_input[type="text"] {
+  border-radius: 50rem 0 0 50rem;
+  padding: 0 10px;
+}
+
+.clear_input[type="button"] {
+  background: none;
+  border-color: skyblue;
+  border-radius: 0 50rem 50rem 0;
+}
+
+.clear_input[type="button"]:active {
+  background: skyblue;
+  color: white;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+thead {
+  background: skyblue;
+  margin: 0;
+  text-align: center;
+}
+
+thead th {
+  padding: 8px 0;
+  font-weight: bold;
+}
+
+tbody td {
+  padding: 2px 4px;
+}
+
+tbody td:not(:last-child) {
+  border-right: solid 1px #d8d8d8;
+}
+
+thead th:not(:last-child) {
+  border-right: dotted 1px #9299c6;
+}
+
+tbody tr:nth-child(even) {
+  background: #e8fbfb;
+}
+
+.buttons_wrapp {
+  height: 32px;
+  background: skyblue;
+  margin-bottom: 5px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr 1fr;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+}
+
+.buttons_wrapp input[type="checkbox"] {
+  margin: 0 auto;
+}
+
+#errorMsg {
+  position: absolute;
+  left: 0;
+  opacity: 1;
+  top: 0;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  padding: 25px 100px 180px 25px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), transparent, transparent);
+}
+
+.errorBlock {
+  position: relative;
+  display: grid;
+  grid-template-columns: 25px 1fr;
+  padding: 10px;
+  padding-right: 15px;
+  background: #f04f23;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  color: white;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
+  opacity: .9;
+}
+
+.errorBlock span.big {
+  font-size: 2.3rem;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.errorBlock span.h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+#errorMsg.fade-enter-active, #errorMsg.fade-leave-active {
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+#errorMsg.fade-enter, #errorMsg.fade-leave-to{
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.errorBlock .cross {
+  padding: 6px 10px;
+  position: absolute;
+  right: -35px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: bolder;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  color: black;
+  top: 0;
+  cursor: pointer;
+  -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+.errorBlock .cross:hover {
+  background: black;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: white;
+}
