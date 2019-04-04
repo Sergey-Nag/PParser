@@ -29,6 +29,7 @@ io.on('connection', function (socket) {
   socket.on('link-export', (data) => {
     if (PP.isLink(data.link)) {
 //      response(socket, 'yes')
+      socket.emit('loading', true);
     } else socket.emit('send-error', 'Неправильная ссылка');
   });
 });

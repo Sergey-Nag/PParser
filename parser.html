@@ -28,22 +28,35 @@
       <input id="linkInput" type="text" class="clear_input" placeholder="Search link..." @keyup.enter="linkExport()"> <input type="button" class="clear_input" value="Поиск" @click="linkExport()">
     </section>
     <section class="block two-row">
-      <table>
-        <thead>
-          <tr>
-            <th v-for="head in returnActivesInput()">{{head.name}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="row in results">
-            <td v-if="returnActivesInput('one')">{{row.one}}</td>
-            <td v-if="returnActivesInput('two')">{{row.two}}</td>
-            <td v-if="returnActivesInput('three')">{{row.three}}</td>
-            <td v-if="returnActivesInput('four')">{{row.four}}</td>
-            <td v-if="returnActivesInput('five')">{{row.five}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <template v-if="isLoading">
+
+        <div class="loading-block">
+          <div class="loading rounded"></div>
+          <div class="loading rounded"></div>
+        </div>
+     
+      </template>
+      <template v-else>
+
+        <table>
+          <thead>
+            <tr>
+              <th v-for="head in returnActivesInput()">{{head.name}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="row in results">
+              <td v-if="returnActivesInput('one')">{{row.one}}</td>
+              <td v-if="returnActivesInput('two')">{{row.two}}</td>
+              <td v-if="returnActivesInput('three')">{{row.three}}</td>
+              <td v-if="returnActivesInput('four')">{{row.four}}</td>
+              <td v-if="returnActivesInput('five')">{{row.five}}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </template>
+
     </section>
     <section class="block">
       <div class="buttons_wrapp">
@@ -102,43 +115,22 @@
             val: true
           }
         ],
-        results: [{
-          one: 'one',
-          two: 'two',
-          three: 'three',
-          four: 'four',
-          five: 'five'
-        }, {
-          one: 'one',
-          two: 'two',
-          three: 'three',
-          four: 'four',
-          five: 'five'
-        }, {
-          one: 'one',
-          two: 'two',
-          three: 'three',
-          four: 'four',
-          five: 'five'
-        }, {
-          one: 'one',
-          two: 'two',
-          three: 'three',
-          four: 'four',
-          five: 'five'
-        }, {
-          one: 'one',
-          two: 'two',
-          three: 'three',
-          four: 'four',
-          five: 'five'
-        }],
+        results: [
+          //          {
+          //          one: 'one',
+          //          two: 'two',
+          //          three: 'three',
+          //          four: 'four',
+          //          five: 'five'
+          //        }
+        ],
         amount: 0,
         isError: false,
         error: {
           name: '',
           descr: ''
-        }
+        },
+        isLoading: true
       },
       methods: {
         update() {
@@ -178,6 +170,9 @@
     });
     socket.on('send-error', function(data) {
       app.showErrMessage(data, 'link', 5000);
+    });
+    socket.on('loading', function(loading) {
+      app.isLoading = loading;
     });
 
   </script>

@@ -164,11 +164,14 @@ tbody tr:nth-child(even) {
   font-weight: bold;
 }
 
-#errorMsg.fade-enter-active, #errorMsg.fade-leave-active {
+#errorMsg.fade-enter-active,
+#errorMsg.fade-leave-active {
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
 }
-#errorMsg.fade-enter, #errorMsg.fade-leave-to{
+
+#errorMsg.fade-enter,
+#errorMsg.fade-leave-to {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
   opacity: 0;
@@ -189,9 +192,44 @@ tbody tr:nth-child(even) {
   -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
+
 .errorBlock .cross:hover {
   background: black;
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   color: white;
+}
+
+.loading-block {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background: #d8d8d8;
+}
+
+.loading {
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  border-right: 30px solid white;
+  border-left: 30px solid white;
+}
+.loading:first-child {
+  animation: loadRight 5s linear infinite;  
+}
+.loading:last-child {
+  margin-top: -100px;
+  animation: loadRight 5s linear infinite reverse;
+}
+
+@keyframes loadRight {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
